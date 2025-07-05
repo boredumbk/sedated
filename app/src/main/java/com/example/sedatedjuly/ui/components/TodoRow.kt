@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.sedatedjuly.data.local.TodoEntity
+import com.example.sedatedjuly.feature_todo.domain.model.ToDo
 
 @Composable
 fun TodoRow(
-    item: TodoEntity,
+    item: ToDo,
     onToggle: () -> Unit,
     onDelete: () -> Unit
 ) {
@@ -31,14 +31,8 @@ fun TodoRow(
 //            Checkbox(checked = item.done, onCheckedChange = { onToggle() })
 //            Spacer(Modifier.width(12.dp))
             Text(
-                text = item.text,
+                text = item.title,
                 modifier = Modifier.weight(1f),
-                style = if (item.done)
-                    MaterialTheme.typography.bodyLarge.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                else
-                    MaterialTheme.typography.bodyLarge
             )
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete")

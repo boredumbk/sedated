@@ -1,4 +1,4 @@
-package com.example.sedatedjuly   // ← keep this the same as the other files
+package com.example.sedatedjuly.feature_todo.presentation   // ← keep this the same as the other files
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

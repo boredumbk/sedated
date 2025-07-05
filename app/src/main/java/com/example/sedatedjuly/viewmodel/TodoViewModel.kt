@@ -4,15 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sedatedjuly.data.TodoRepository
-import com.example.sedatedjuly.data.local.TodoDatabase
-import com.example.sedatedjuly.data.local.TodoEntity
+import com.example.sedatedjuly.feature_todo.data.data_source.TodoDatabase
+import com.example.sedatedjuly.feature_todo.domain.model.ToDo
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TodoViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val repo = TodoRepository(
+/*    private val repo = TodoRepository(
         TodoDatabase.get(app).todoDao()
     )
 
@@ -23,14 +23,14 @@ class TodoViewModel(app: Application) : AndroidViewModel(app) {
     private var nextId = 0
 
     fun add(text: String) = viewModelScope.launch {
-        repo.add(TodoEntity(nextId++, text.trim()))
+        repo.add(ToDo(nextId++, text.trim()))
     }
 
-    fun toggle(todo: TodoEntity) = viewModelScope.launch {
+    fun toggle(todo: ToDo) = viewModelScope.launch {
         repo.add(todo.copy(done = !todo.done))
     }
 
-    fun delete(todo: TodoEntity) = viewModelScope.launch {
+    fun delete(todo: ToDo) = viewModelScope.launch {
         repo.delete(todo)
-    }
+    }*/
 }

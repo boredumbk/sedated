@@ -25,67 +25,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun TodoScreen(viewModel: TodoViewModel = viewModel()) {
 
-    val todos by viewModel.todos.collectAsState()
+
     var entry by remember { mutableStateOf("") }
     val listState   = rememberLazyListState()             // <─ for scrolling
     val coroutine   = rememberCoroutineScope()
     val inner = 10.dp
 
-    LaunchedEffect(todos.size) {
-        if (todos.isNotEmpty()) {
-            coroutine.launch { listState.animateScrollToItem(0) }
-        }
-    }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        // Top Bar
-        CenterAlignedTopAppBar(
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = Color(0xFFFF8D00),
-                titleContentColor = Color(0xFF3B0B0B),
-            ),
-            title = { Text("SEDATED") }
-        )
-
-        // Content area that doesn't get affected by keyboard
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .imePadding()
-                    .padding(inner)
-                    .padding(horizontal = 16.dp),
-                reverseLayout      = true,                     // newest at bottom
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Bottom),
-                contentPadding      = PaddingValues(bottom = 8.dp)
-            )
-            {
-                items(todos, key = { it.id }) { item ->
-                    TodoRow(
-                        item,
-                        onToggle = { viewModel.toggle(item) },
-                        onDelete = { viewModel.delete(item) }
-                    )
-                }
-            }
-
-        }
-
-        // Input bar that moves with keyboard
-        InputBar(
-            text = entry,
-            onTextChange = { entry = it },
-            onSend = { txt ->
-                viewModel.add(txt)
-                entry = ""
-            }
-        )
-    }
 }
 
 @Composable
