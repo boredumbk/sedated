@@ -20,3 +20,5 @@ data class ToDo(
         val noteColors = listOf(DeepBlue, ForestGreen, SunsetOrange, GoldenYellow, SlateGray)
     }
 }
+
+class InvalidTodoException(message: String): Exception(message)
