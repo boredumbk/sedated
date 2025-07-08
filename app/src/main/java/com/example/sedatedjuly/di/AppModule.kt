@@ -1,5 +1,6 @@
 package com.example.sedatedjuly.di
 
+import android.app.Application
 import androidx.room.Room
 import com.example.sedatedjuly.feature_todo.data.data_source.TodoDatabase
 import com.example.sedatedjuly.feature_todo.data.repository.TodoRepositoryImpl
@@ -20,7 +21,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTodoDatabase(app: Appication): TodoDatabase {
+    fun provideTodoDatabase(app: Application): TodoDatabase {
         return Room.databaseBuilder(
             app,
             TodoDatabase::class.java,
