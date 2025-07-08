@@ -6,8 +6,6 @@ import com.example.sedatedjuly.feature_todo.domain.repository.TodoRepository
 class DeleteTodoUseCase(
     private val repository: TodoRepository
 ) {
-
-
     suspend operator fun invoke(toDo: ToDo) {
         repository.deleteTodo(toDo)
     }
