@@ -3,7 +3,6 @@ package com.example.sedatedjuly.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sedatedjuly.data.TodoRepository
 import com.example.sedatedjuly.feature_todo.data.data_source.TodoDatabase
 import com.example.sedatedjuly.feature_todo.domain.model.ToDo
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,0 +1,7 @@
+package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo.components
+
+data class TodoTextFieldState(
+    val text: String = "",
+    val hint: String = "",
+    val isHintVisible: Boolean = true
+)

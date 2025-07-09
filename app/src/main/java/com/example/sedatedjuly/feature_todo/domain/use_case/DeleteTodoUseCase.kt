@@ -7,6 +7,6 @@ class DeleteTodoUseCase(
     private val repository: TodoRepository
 ) {
     suspend operator fun invoke(toDo: ToDo) {
-        repository.deleteTodo(toDo)
+        repository.deleteToDo(toDo)
     }
 }

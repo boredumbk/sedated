@@ -41,7 +41,8 @@ object AppModule {
         return TodoUseCases(
             getTodosUseCase = GetTodosUseCase(repository),
             deleteTodoUseCase = DeleteTodoUseCase(repository),
-            addTodoUseCase = AddTodoUseCase(repository)
+            addTodoUseCase = AddTodoUseCase(repository),
+            getTodoUseCase = GetTodosUseCase(repository)
         )
     }
 }

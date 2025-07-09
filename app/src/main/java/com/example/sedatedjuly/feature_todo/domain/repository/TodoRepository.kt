@@ -5,11 +5,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
 
-    fun getTodos(): Flow<List<ToDo>>
+    suspend fun upsertToDo(todo: ToDo)
 
-    suspend fun getTodoById(id: Int): ToDo?
+    suspend fun getToDoById(id: Int): ToDo?
 
-    suspend fun insertTodo(todo: ToDo)
+    suspend fun deleteToDo(todo: ToDo)
 
-    suspend fun deleteTodo(todo: ToDo)
+    fun getOldestToDos(): Flow<List<ToDo>>
+
+    //may only need this one
+    fun getMostRecentToDos(): Flow<List<ToDo>>
 }

@@ -5,17 +5,22 @@ import com.example.sedatedjuly.feature_todo.domain.model.ToDo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TodoDao {
+interface TodoDao  {
 
-    @Query("SELECT * FROM todos")
-    fun getTodos(): Flow<List<ToDo>>
+    @Upsert
+    suspend fun upsertTask(task: ToDo)
 
     @Query("SELECT * FROM todos WHERE id = :id")
-    suspend fun getTodoById(id: Int): ToDo?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTodo(todo: ToDo)
+    suspend fun getTaskById(id: Int): ToDo?
 
     @Delete
     suspend fun deleteTodo(todo: ToDo)
+
+    @Query("SELECT * FROM todos ORDER BY taskCreatedAt ASC")
+    fun getOldestTasks(): Flow<List<ToDo>>
+
+    //TODOMay only need this one
+    @Query("SELECT * FROM todos ORDER BY taskCreatedAt DESC")
+    fun getMostRecentTasks(): Flow<List<ToDo>>
+
 }

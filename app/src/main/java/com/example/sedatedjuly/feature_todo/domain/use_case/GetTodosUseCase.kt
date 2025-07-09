@@ -10,11 +10,10 @@ import kotlinx.coroutines.flow.map
 class GetTodosUseCase(
     private val repository: TodoRepository
 ) {
-
     operator fun invoke(
         todoOrder: TodoOrder = TodoOrder.Date(OrderType.Descending)
     ): Flow<List<ToDo>> {
-        return repository.getTodos().map { todos ->
+        return repository.getMostRecentToDos().map { todos ->
             when(todoOrder.orderType) {
                 is OrderType.Ascending -> {
                     when(todoOrder) {
