@@ -1,4 +1,4 @@
-package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo.components
+package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -33,24 +35,26 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sedatedjuly.core.util.TestTags
+import com.example.sedatedjuly.feature_todo.domain.model.ToDo
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddEditTaskScreen (
+fun AddEditTodoScreen (
     navController: NavController,
-    taskColor: Int,
-    viewModel: AddEditTaskViewModel = hiltViewModel()
+    todoColor: Int,
+    viewModel: AddEditTodoViewModel = hiltViewModel()
 ) {
-    val titleState = viewModel.taskTitle.value
-    val contentState = viewModel.taskContent.value
+    val titleState = viewModel.todoTitle.value
+    val contentState = viewModel.todoContent.value
 
     val snackbarHostState = remember {
         SnackbarHostState()
     }
 
-    val taskBackgroundAnimatable = remember {
+    val todoBackgroundAnimatable = remember {
         Animatable(
-            Color(if(taskColor != -1) taskColor else viewModel.taskColor.value)
+            Color(if(todoColor != -1) todoColor else viewModel.todoColor.value)
         )
     }
     val scope = rememberCoroutineScope()
@@ -58,12 +62,12 @@ fun AddEditTaskScreen (
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is AddEditTaskViewModel.UiEvent.ShowSnackbar -> {
+                is AddEditTodoViewModel.UiEvent.ShowSnackbar -> {
                     snackbarHostState.showSnackbar(
                         message = event.message
                     )
                 }
-                is AddEditTaskViewModel.UiEvent.SaveTask -> {
+                is AddEditTodoViewModel.UiEvent.SaveTodo -> {
                     navController.navigateUp()
                 }
             }
@@ -74,7 +78,7 @@ fun AddEditTaskScreen (
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(AddEditTaskEvent.SaveTask)
+                    viewModel.onEvent(AddEditTodoEvent.SaveTodo)
                 },
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Save")
@@ -87,7 +91,7 @@ fun AddEditTaskScreen (
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(taskBackgroundAnimatable.value)
+                .background(todoBackgroundAnimatable.value)
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp)
         ) {
@@ -97,7 +101,7 @@ fun AddEditTaskScreen (
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Task.taskColors.forEach { color ->
+                ToDo.todoColors.forEach { color ->
                     val colorInt = color.toArgb()
                     Box(
                         modifier = Modifier
@@ -107,21 +111,21 @@ fun AddEditTaskScreen (
                             .background(color)
                             .border(
                                 width = 3.dp,
-                                color = if (viewModel.taskColor.value == colorInt) {
+                                color = if (viewModel.todoColor.value == colorInt) {
                                     Color.Black
                                 } else Color.Transparent,
                                 shape = CircleShape
                             )
                             .clickable {
                                 scope.launch {
-                                    taskBackgroundAnimatable.animateTo(
+                                    todoBackgroundAnimatable.animateTo(
                                         targetValue = Color(colorInt),
                                         animationSpec = tween(
                                             durationMillis = 500
                                         )
                                     )
                                 }
-                                viewModel.onEvent(AddEditTaskEvent.ChangeColor(colorInt))
+                                viewModel.onEvent(AddEditTodoEvent.ChangeColor(colorInt))
                             }
                     )
                 }
@@ -131,7 +135,7 @@ fun AddEditTaskScreen (
 //            TextField(
 //                value = titleState.text,
 //                onValueChange = { newValue ->
-//                    viewModel.onEvent(AddEditTaskEvent.EnteredTitle(newValue))
+//                    viewModel.onEvent(AddEditTodoEvent.EnteredTitle(newValue))
 //                },
 //                label = { Text(titleState.hint) }, // Assuming titleState.hint contains the hint text
 //                textStyle = TextStyle(fontSize = 20.sp),
@@ -145,7 +149,7 @@ fun AddEditTaskScreen (
             TextField(
                 value = titleState.text,
                 onValueChange = { newValue ->
-                    viewModel.onEvent(AddEditTaskEvent.EnteredTitle(newValue))
+                    viewModel.onEvent(AddEditTodoEvent.EnteredTitle(newValue))
                 },
                 label = { Text(titleState.hint) }, // Display hint as label
                 textStyle = TextStyle(fontSize = 20.sp),
@@ -153,7 +157,7 @@ fun AddEditTaskScreen (
                     .padding(horizontal = 16.dp, vertical = 16.dp)
                     .fillMaxWidth()
 //                    .onFocusChanged { focusState ->
-//                        viewModel.onEvent(AddEditTaskEvent.ChangeTitleFocus(focusState))
+//                        viewModel.onEvent(AddEditTodoEvent.ChangeTitleFocus(focusState))
 //                    }
                     .testTag(TestTags.TITLE_TEXT_FIELD) // Applying the test tag
             )
@@ -163,7 +167,7 @@ fun AddEditTaskScreen (
 //            TextField(
 //                value = contentState.text,
 //                onValueChange = { newValue ->
-//                    viewModel.onEvent(AddEditTaskEvent.EnteredContent(newValue))
+//                    viewModel.onEvent(AddEditTodoEvent.EnteredContent(newValue))
 //                },
 //                label = { Text(contentState.hint) }, // Assuming contentState.hint contains the hint text
 //                textStyle = TextStyle(fontSize = 20.sp),
@@ -177,7 +181,7 @@ fun AddEditTaskScreen (
             TextField(
                 value = contentState.text,
                 onValueChange = { newValue ->
-                    viewModel.onEvent(AddEditTaskEvent.EnteredContent(newValue))
+                    viewModel.onEvent(AddEditTodoEvent.EnteredContent(newValue))
                 },
                 label = { Text(contentState.hint) }, // Display hint as label
                 textStyle = TextStyle(fontSize = 20.sp),
@@ -185,7 +189,7 @@ fun AddEditTaskScreen (
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .fillMaxWidth()
                     .onFocusChanged { focusState ->
-                        viewModel.onEvent(AddEditTaskEvent.ChangeContentFocus(focusState))
+                        viewModel.onEvent(AddEditTodoEvent.ChangeContentFocus(focusState))
                     }
                     .testTag(TestTags.CONTENT_TEXT_FIELD) // Applying the test tag
             )

@@ -60,7 +60,7 @@ fun TodoItem(
         ) {
             Icon(
                 imageVector = Icons.Default.Done,
-                contentDescription = "Delete Task",
+                contentDescription = "Delete todo",
                 modifier = Modifier
                     .size(44.dp) // Adjust size as needed
                     .border(

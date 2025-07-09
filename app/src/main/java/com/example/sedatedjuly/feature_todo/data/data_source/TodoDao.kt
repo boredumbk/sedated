@@ -8,19 +8,19 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao  {
 
     @Upsert
-    suspend fun upsertTask(task: ToDo)
+    suspend fun upserttodo(todo: ToDo)
 
     @Query("SELECT * FROM todos WHERE id = :id")
-    suspend fun getTaskById(id: Int): ToDo?
+    suspend fun gettodoById(id: Int): ToDo?
 
     @Delete
     suspend fun deleteTodo(todo: ToDo)
 
-    @Query("SELECT * FROM todos ORDER BY taskCreatedAt ASC")
-    fun getOldestTasks(): Flow<List<ToDo>>
+    @Query("SELECT * FROM todos ORDER BY todoCreatedAt ASC")
+    fun getOldesttodos(): Flow<List<ToDo>>
 
     //TODOMay only need this one
-    @Query("SELECT * FROM todos ORDER BY taskCreatedAt DESC")
-    fun getMostRecentTasks(): Flow<List<ToDo>>
+    @Query("SELECT * FROM todos ORDER BY todoCreatedAt DESC")
+    fun getMostRecenttodos(): Flow<List<ToDo>>
 
 }

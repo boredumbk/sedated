@@ -56,7 +56,7 @@ fun TodosScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.AddEditTaskScreen.route)
+                    navController.navigate(Screen.AddEdittodoScreen.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
@@ -83,7 +83,7 @@ fun TodosScreen(
                 )
                 IconButton(
                     onClick = {
-                        viewModel.onEvent(TasksEvent.ToggleOrderSection)
+                        viewModel.onEvent(todosEvent.ToggleOrderSection)
                     },
                 ) {
                     Icon(
@@ -102,9 +102,9 @@ fun TodosScreen(
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
                         .testTag(TestTags.ORDER_SECTION),
-                    taskOrder = state.taskOrder,
+                    todoOrder = state.todoOrder,
                     onOrderChange = {
-                        viewModel.onEvent(TasksEvent.Order(it))
+                        viewModel.onEvent(todosEvent.Order(it))
                     }
                 )
             }
@@ -114,31 +114,31 @@ fun TodosScreen(
 
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.tasks) { task ->
-                    TaskItem(
-                        task = task,
+                items(state.todos) { todo ->
+                    todoItem(
+                        todo = todo,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = Color(task.color))
+                            .background(color = Color(todo.color))
                             .clickable {
                                 navController.navigate(
-                                    Screen.AddEditTaskScreen.route +
-                                            "?taskId=${task.id}&taskColor=${task.color}"
+                                    Screen.AddEdittodoScreen.route +
+                                            "?todoId=${todo.id}&todoColor=${todo.color}"
                                 )
                             },
 
                         onDeleteClick = {
-                            viewModel.onEvent(TasksEvent.DeleteTask(task))
+                            viewModel.onEvent(todosEvent.Deletetodo(todo))
                             scope.launch {
                                 // Show the snackbar and capture the result
                                 val result = snackbarHostState.showSnackbar(
-                                    message = "Task deleted",
+                                    message = "todo deleted",
                                     actionLabel = "Undo"
                                 )
 
                                 // Handle the action performed on the snackbar
                                 if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(TasksEvent.RestoreTask)
+                                    viewModel.onEvent(todosEvent.Restoretodo)
 
                                 }
                             }

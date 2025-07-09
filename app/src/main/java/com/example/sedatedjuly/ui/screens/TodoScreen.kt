@@ -58,7 +58,7 @@ private fun InputBar(
             OutlinedTextField(
                 value = text,
                 onValueChange = onTextChange,
-                placeholder = { Text("Add a task…") },
+                placeholder = { Text("Add a todo…") },
                 modifier = Modifier
                     .weight(1f)
                     .heightIn(min = 56.dp, max = 120.dp), // Reduced max height

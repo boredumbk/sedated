@@ -1,4 +1,4 @@
-package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo.components
+package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo
 
 data class TodoTextFieldState(
     val text: String = "",

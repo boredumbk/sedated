@@ -60,16 +60,15 @@ class TodosViewModel @Inject constructor(
         }
     }
 
-    private fun getTodos(taskOrder: TodoOrder) {
+    private fun getTodos(todoOrder: TodoOrder) {
         getTodosJob?.cancel()
-        getTodosJob = todosUseCases.getTodosUseCase(taskOrder)
+        getTodosJob = todosUseCases.getTodosUseCase(todoOrder)
             .onEach { todos ->
                 _state.value = state.value.copy(
                     todos = todos,
-                    todoOrder = taskOrder
+                    todoOrder = todoOrder
                 )
             }
             .launchIn(viewModelScope)
     }
-
 }
