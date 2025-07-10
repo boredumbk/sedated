@@ -3,13 +3,9 @@ package com.example.sedatedjuly.feature_todo.domain.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.sedatedjuly.ui.theme.DeepBlue
-import com.example.sedatedjuly.ui.theme.ForestGreen
-import com.example.sedatedjuly.ui.theme.GoldenYellow
-import com.example.sedatedjuly.ui.theme.SlateGray
-import com.example.sedatedjuly.ui.theme.SunsetOrange
+import com.example.sedatedjuly.ui.theme.*
 
-@Entity()
+@Entity(tableName = "todos")
 data class ToDo(
     val title: String,
     val content: String,
@@ -20,7 +16,7 @@ data class ToDo(
     val id: Int = 0
 ) {
     companion object {
-        val noteColors = listOf(DeepBlue, ForestGreen, SunsetOrange, GoldenYellow, SlateGray)
+        val todoColors = listOf(RedOrange, LightGreen, Violet, BabyBlue, RedPink)
     }
 }
 

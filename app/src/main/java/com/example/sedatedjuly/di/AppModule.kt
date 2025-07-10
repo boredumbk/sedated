@@ -7,6 +7,7 @@ import com.example.sedatedjuly.feature_todo.data.repository.TodoRepositoryImpl
 import com.example.sedatedjuly.feature_todo.domain.repository.TodoRepository
 import com.example.sedatedjuly.feature_todo.domain.use_case.AddTodoUseCase
 import com.example.sedatedjuly.feature_todo.domain.use_case.DeleteTodoUseCase
+import com.example.sedatedjuly.feature_todo.domain.use_case.GetTodoUseCase
 import com.example.sedatedjuly.feature_todo.domain.use_case.GetTodosUseCase
 import com.example.sedatedjuly.feature_todo.domain.use_case.TodoUseCases
 import dagger.Module
@@ -42,7 +43,7 @@ object AppModule {
             getTodosUseCase = GetTodosUseCase(repository),
             deleteTodoUseCase = DeleteTodoUseCase(repository),
             addTodoUseCase = AddTodoUseCase(repository),
-            getTodoUseCase = GetTodosUseCase(repository)
+            getTodoUseCase = GetTodoUseCase(repository)
         )
     }
 }

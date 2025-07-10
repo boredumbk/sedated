@@ -41,7 +41,7 @@ class AddEditTodoViewModel @Inject constructor(
         savedStateHandle.get<Int>("todoId")?.let { todoId ->
             if(todoId != -1) {
                 viewModelScope.launch {
-                    todoUseCases.gettodo(todoId)?.also { todo ->
+                    todoUseCases.getTodosUseCase(todoId)?.also { todo ->
                         currentTodoId = todo.id
                         _todoTitle.value = todoTitle.value.copy(
                             text = todo.todoName,
