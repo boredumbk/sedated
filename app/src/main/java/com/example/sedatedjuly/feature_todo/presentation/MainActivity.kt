@@ -1,13 +1,20 @@
-package com.example.sedatedjuly.feature_todo.presentation   // ← keep this the same as the other files
+package com.example.sedatedjuly.feature_todo.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.sedatedjuly.feature_todo.presentation.add_edit_todo.AddEditTodoScreen
+import com.example.sedatedjuly.feature_todo.presentation.todos.TodosScreen
 import com.example.sedatedjuly.feature_todo.presentation.util.Screen
-import com.example.sedatedjuly.ui.screens.TodoScreen
-import com.example.sedatedjuly.ui.theme.SedatedjulyTheme   // ← adjust if your Theme.kt
+import com.example.sedatedjuly.ui.theme.SedatedjulyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +35,7 @@ class MainActivity : ComponentActivity() {
                             TodosScreen(navController = navController)
                         }
                         composable(
-                            route = Screen.AddEditTodoScreen.route +
+                            route = Screen.AddEditTodosScreen.route +
                                     "?todoId={todoId}&todoColor={todoColor}",
                             arguments = listOf(
                                 navArgument(
@@ -57,4 +64,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-

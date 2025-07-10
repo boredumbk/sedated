@@ -3,6 +3,8 @@ package com.example.sedatedjuly.feature_todo.presentation.add_edit_todo
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -31,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -70,7 +74,7 @@ fun AddEditTodoScreen (
                         message = event.message
                     )
                 }
-                is AddEditTodoViewModel.UiEvent.SaveTodo -> {
+                is AddEditTodoViewModel.UiEvent.Savetodo -> {
                     navController.navigateUp()
                 }
             }
@@ -81,7 +85,7 @@ fun AddEditTodoScreen (
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(AddEditTodoEvent.SaveTodo)
+                    viewModel.onEvent(AddEditTodoEvent.Savetodo)
                 },
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Save")

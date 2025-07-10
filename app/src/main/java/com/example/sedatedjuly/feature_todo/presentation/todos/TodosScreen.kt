@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +37,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.sedatedjuly.core.util.TestTags
+import com.example.sedatedjuly.feature_todo.presentation.todos.components.OrderSection
+import com.example.sedatedjuly.feature_todo.presentation.todos.components.TodoItem
+import com.example.sedatedjuly.feature_todo.presentation.util.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -56,15 +64,13 @@ fun TodosScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.AddEdittodoScreen.route)
+                    navController.navigate(Screen.AddEditTodosScreen.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
             }
         },
-
-
-        ) { paddingValues ->
+    ) { paddingValues ->
         // Apply padding provided by the Scaffold to the Column
         Column(
             modifier = Modifier
@@ -78,12 +84,12 @@ fun TodosScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Flow with your todos",
+                    text = "Sedated with your todos",
                     style = MaterialTheme.typography.headlineSmall
                 )
                 IconButton(
                     onClick = {
-                        viewModel.onEvent(todosEvent.ToggleOrderSection)
+                        viewModel.onEvent(TodosEvent.ToggleOrderSection)
                     },
                 ) {
                     Icon(
@@ -104,42 +110,38 @@ fun TodosScreen(
                         .testTag(TestTags.ORDER_SECTION),
                     todoOrder = state.todoOrder,
                     onOrderChange = {
-                        viewModel.onEvent(todosEvent.Order(it))
+                        viewModel.onEvent(TodosEvent.Order(it))
                     }
                 )
             }
 
-
             Spacer(modifier = Modifier.height(16.dp))
-
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.todos) { todo ->
-                    todoItem(
+                    TodoItem(
                         todo = todo,
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(color = Color(todo.color))
                             .clickable {
                                 navController.navigate(
-                                    Screen.AddEdittodoScreen.route +
+                                    Screen.AddEditTodosScreen.route +
                                             "?todoId=${todo.id}&todoColor=${todo.color}"
                                 )
                             },
-
                         onDeleteClick = {
-                            viewModel.onEvent(todosEvent.Deletetodo(todo))
+                            viewModel.onEvent(TodosEvent.DeleteTodo(todo))
                             scope.launch {
                                 // Show the snackbar and capture the result
                                 val result = snackbarHostState.showSnackbar(
-                                    message = "todo deleted",
+                                    message = "Todo deleted",
                                     actionLabel = "Undo"
                                 )
 
                                 // Handle the action performed on the snackbar
                                 if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(todosEvent.Restoretodo)
-
+                                    viewModel.onEvent(TodosEvent.RestoreTodo)
                                 }
                             }
 
