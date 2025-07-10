@@ -54,7 +54,7 @@ fun OrderSection(
                 text = "Ascending",
                 selected = todoOrder.orderType is OrderType.Ascending,
                 onSelect = {
-                    onOrderChange(TodoOrder.copy(OrderType.Ascending))
+                    onOrderChange(todoOrder.copy(OrderType.Ascending))
                 }
             )
             DefaultRadioButton(

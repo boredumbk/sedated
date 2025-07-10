@@ -19,7 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
     fun provideTodoDatabase(app: Application): TodoDatabase {
@@ -29,13 +28,11 @@ object AppModule {
             TodoDatabase.DATABASE_NAME
         ).build()
     }
-
     @Provides
     @Singleton
     fun providesTodoRepository(db: TodoDatabase): TodoRepository {
         return TodoRepositoryImpl(db.todoDao)
     }
-
     @Provides
     @Singleton
     fun provideTodoUseCases(repository: TodoRepository): TodoUseCases {
